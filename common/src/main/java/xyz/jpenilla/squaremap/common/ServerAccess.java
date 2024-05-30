@@ -2,6 +2,7 @@ package xyz.jpenilla.squaremap.common;
 
 import java.util.Collection;
 import java.util.UUID;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -11,6 +12,8 @@ import xyz.jpenilla.squaremap.api.WorldIdentifier;
 
 @DefaultQualifier(NonNull.class)
 public interface ServerAccess {
+    MinecraftServer server();
+
     Collection<ServerLevel> levels();
 
     @Nullable ServerLevel level(WorldIdentifier identifier);

@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -27,6 +30,11 @@ public final class PaperServerAccess implements ServerAccess {
     @Inject
     private PaperServerAccess(final Server server) {
         this.server = server;
+    }
+
+    @Override
+    public MinecraftServer server() {
+        return ((CraftServer) this.server).getServer(); // TODO: should be in CraftBukkitHelper?
     }
 
     @Override

@@ -18,6 +18,7 @@ import xyz.jpenilla.squaremap.common.command.Commands;
 import xyz.jpenilla.squaremap.common.config.Config;
 import xyz.jpenilla.squaremap.common.config.ConfigManager;
 import xyz.jpenilla.squaremap.common.config.Messages;
+import xyz.jpenilla.squaremap.common.data.BiomeBlocks;
 import xyz.jpenilla.squaremap.common.data.DirectoryProvider;
 import xyz.jpenilla.squaremap.common.data.LevelBiomeColorData;
 import xyz.jpenilla.squaremap.common.httpd.IntegratedServer;
@@ -38,6 +39,7 @@ public final class SquaremapCommon {
     private final WorldManagerImpl worldManager;
     private final Commands commands;
     private final SquaremapJarAccess squaremapJar;
+    private final ServerAccess serverAccess;
 
     @Inject
     private SquaremapCommon(
@@ -48,7 +50,8 @@ public final class SquaremapCommon {
         final AbstractPlayerManager playerManager,
         final WorldManagerImpl worldManager,
         final Commands commands,
-        final SquaremapJarAccess squaremapJar
+        final SquaremapJarAccess squaremapJar,
+        final ServerAccess serverAccess
     ) {
         this.injector = injector;
         this.platform = platform;
@@ -58,9 +61,11 @@ public final class SquaremapCommon {
         this.worldManager = worldManager;
         this.commands = commands;
         this.squaremapJar = squaremapJar;
+        this.serverAccess = serverAccess;
     }
 
     public void init() {
+        BiomeBlocks.init(serverAccess.server().registryAccess());
         this.configManager.init();
         this.directoryProvider.init();
         this.start();

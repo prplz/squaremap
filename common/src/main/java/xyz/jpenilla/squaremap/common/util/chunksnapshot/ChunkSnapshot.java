@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.QuartPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -82,5 +83,18 @@ public interface ChunkSnapshot extends LevelHeightAccessor, BiomeManager.NoiseBi
             level.dimensionType(),
             chunk.getPos()
         );
+    }
+
+    static ChunkSnapshot biomeSnapshot(final Level level, final int x, final int z) {
+        final ChunkPos pos = new ChunkPos(x, z);
+        final LevelHeightAccessor heightAccessor = LevelHeightAccessor.create(level.getMinBuildHeight(), level.getHeight());
+        int biomeX = QuartPos.fromBlock(pos.getMinBlockX());
+        int biomeY = QuartPos.fromSection(heightAccessor.getMaxSection());
+        int biomeZ = QuartPos.fromBlock(pos.getMinBlockZ());
+        @SuppressWarnings("unchecked") Holder<Biome>[] biomes = (Holder<Biome>[]) new Holder[16];
+        for (int i = 0; i < 16; i++) {
+            biomes[i] = level.getUncachedNoiseBiome(biomeX + (i & 3), biomeY, biomeZ + (i >> 2));
+        }
+        return new BiomeChunkSnapshot(heightAccessor, level.dimensionType(), pos, biomes);
     }
 }

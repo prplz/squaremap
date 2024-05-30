@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -23,6 +24,11 @@ public final class SpongeServerAccess implements ServerAccess {
     @Inject
     private SpongeServerAccess(final Game game) {
         this.game = game;
+    }
+
+    @Override
+    public MinecraftServer server() {
+        return (MinecraftServer) game.server();
     }
 
     @Override

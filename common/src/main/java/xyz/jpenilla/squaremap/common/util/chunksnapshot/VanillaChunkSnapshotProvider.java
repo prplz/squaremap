@@ -25,7 +25,7 @@ record VanillaChunkSnapshotProvider(ServerLevel level) implements ChunkSnapshotP
         return CompletableFuture.supplyAsync(() -> {
             final @Nullable ChunkAccess chunk = chunkIfGenerated(this.level, x, z);
             if (chunk == null) {
-                return null;
+                return ChunkSnapshot.biomeSnapshot(this.level, x, z);
             }
             return ChunkSnapshot.snapshot(this.level, chunk, false);
         }, this.level.getServer());

@@ -46,14 +46,14 @@ record PaperChunkSnapshotProvider(
             return load;
         }, this.executor(x, z)).thenCompose(chunkFuture -> chunkFuture.thenApplyAsync(chunk -> {
             if (chunk == null) {
-                return null;
+                return ChunkSnapshot.biomeSnapshot(this.level, x, z);
             }
             if (chunk instanceof ImposterProtoChunk imposter) {
                 chunk = imposter.getWrapped();
             }
             if (!chunk.getStatus().isOrAfter(ChunkStatus.FULL)) {
                 if (chunk.getBelowZeroRetrogen() == null || !chunk.getBelowZeroRetrogen().targetStatus().isOrAfter(ChunkStatus.SPAWN)) {
-                    return null;
+                    return ChunkSnapshot.biomeSnapshot(this.level, x, z);
                 }
             }
             return ChunkSnapshot.snapshot(this.level, chunk, false);

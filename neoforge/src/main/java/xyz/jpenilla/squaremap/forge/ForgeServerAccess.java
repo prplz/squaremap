@@ -41,6 +41,11 @@ public final class ForgeServerAccess implements ServerAccess {
     }
 
     @Override
+    public MinecraftServer server() {
+        return this.requireServer();
+    }
+
+    @Override
     public Collection<ServerLevel> levels() {
         if (this.server == null) {
             return List.of();
