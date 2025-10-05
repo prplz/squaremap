@@ -46,11 +46,11 @@ public interface ChunkSnapshot extends LevelHeightAccessor, BiomeManager.NoiseBi
         Map<Heightmap.Types, HeightmapSnapshot> heightmaps = ChunkSnapshotImpl.EMPTY_HEIGHTMAPS;
         if (!biomesOnly) {
             if (!chunk.hasPrimedHeightmap(Heightmap.Types.WORLD_SURFACE)) {
-                if (chunk.getBelowZeroRetrogen() == null) {
-                    throw new IllegalStateException("Expected WORLD_SURFACE heightmap to be present, but it wasn't! " + chunk.getPos());
-                } else {
+//                if (chunk.getBelowZeroRetrogen() == null) {
+//                    throw new IllegalStateException("Expected WORLD_SURFACE heightmap to be present, but it wasn't! " + chunk.getPos());
+//                } else {
                     Heightmap.primeHeightmaps(chunk, Set.of(Heightmap.Types.WORLD_SURFACE));
-                }
+//                }
             }
             heightmaps = new EnumMap<>(ChunkSnapshotImpl.EMPTY_HEIGHTMAPS);
             heightmaps.put(Heightmap.Types.WORLD_SURFACE, new HeightmapSnapshot(chunk, heightAccessor, Heightmap.Types.WORLD_SURFACE));

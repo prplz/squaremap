@@ -54,11 +54,14 @@ record PaperChunkSnapshotProvider(
         if (chunk instanceof ImposterProtoChunk imposter) {
             chunk = imposter.getWrapped();
         }
-        if (!chunk.getPersistedStatus().isOrAfter(ChunkStatus.FULL)) {
-            if (chunk.getBelowZeroRetrogen() == null || !chunk.getBelowZeroRetrogen().targetStatus().isOrAfter(ChunkStatus.SPAWN)) {
-                return null;
-            }
+        if (!chunk.getPersistedStatus().isOrAfter(ChunkStatus.SURFACE)) {
+            return null;
         }
+//        if (!chunk.getPersistedStatus().isOrAfter(ChunkStatus.FULL)) {
+//            if (chunk.getBelowZeroRetrogen() == null || !chunk.getBelowZeroRetrogen().targetStatus().isOrAfter(ChunkStatus.SPAWN)) {
+//                return null;
+//            }
+//        }
         return ChunkSnapshot.snapshot(this.level, chunk, false);
     }
 
