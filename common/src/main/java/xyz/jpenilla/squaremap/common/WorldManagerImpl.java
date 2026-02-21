@@ -16,6 +16,7 @@ import xyz.jpenilla.squaremap.api.WorldIdentifier;
 import xyz.jpenilla.squaremap.common.config.ConfigManager;
 import xyz.jpenilla.squaremap.common.data.MapWorldInternal;
 import xyz.jpenilla.squaremap.common.util.Util;
+import xyz.jpenilla.squaremap.common.util.chunksnapshot.EmptySectionHolder;
 
 @DefaultQualifier(NonNull.class)
 @Singleton
@@ -52,6 +53,7 @@ public class WorldManagerImpl implements WorldManager {
     }
 
     public void initWorld(final ServerLevel level) {
+        EmptySectionHolder.init(level.palettedContainerFactory());
         final WorldIdentifier identifier = Util.worldIdentifier(level);
         if (this.worlds.containsKey(identifier)) {
             throw new IllegalStateException("MapWorld already exists for '" + identifier.asString() + "'");

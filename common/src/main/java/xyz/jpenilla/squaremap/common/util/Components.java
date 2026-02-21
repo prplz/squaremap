@@ -43,11 +43,11 @@ public final class Components {
     }
 
     public static TagResolver.Single worldPlaceholder(final ServerLevel level) {
-        return placeholder("world", level.dimension().location());
+        return placeholder("world", level.dimension().identifier());
     }
 
     public static TagResolver.Single playerPlaceholder(final ServerPlayer player) {
-        return placeholder("player", player.getGameProfile().getName());
+        return placeholder("player", player.getGameProfile().name());
     }
 
     public static Component highlightSpecialCharacters(final Component component, final TextColor highlightColor) {

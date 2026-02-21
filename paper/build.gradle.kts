@@ -1,5 +1,6 @@
 import io.papermc.paperweight.userdev.ReobfArtifactConfiguration
 import xyz.jpenilla.resourcefactory.bukkit.BukkitPluginYaml
+import xyz.jpenilla.runpaper.task.RunServer
 
 plugins {
   id("squaremap.platform")
@@ -16,7 +17,7 @@ val plainMinecraftVersion = minecraftVersion.get()
   .joinToString(".")
 
 dependencies {
-  paperweight.paperDevBundle("$plainMinecraftVersion-R0.1-SNAPSHOT")
+  paperweight.paperDevBundle("${minecraftVersion.get()}-R0.1-SNAPSHOT")
 
   implementation(projects.squaremapCommon)
   implementation(projects.squaremapPaper.folia)
@@ -42,7 +43,7 @@ tasks {
       "org.aopalliance",
     ).forEach(::reloc)
   }
-  runServer {
+  withType<RunServer>().configureEach {
     runProps(layout, providers).forEach { (key, value) ->
       systemProperty(key, value)
     }
